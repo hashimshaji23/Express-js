@@ -51,41 +51,87 @@ const PORT = 3001;
 
 // Request methods
 
+
+
 // A. req.params
 
-app.get('/user/:id',(req,res)=>{
-    res.send(params.id)
-})
+// app.get('/user/:id',(req,res)=>{
+//     res.send(params.id)
+// })
 
-// B. req.query
+// // B. req.query
 
-app.get('/search',(req,res)=>{
-    res.send(req.query.name)
-})
-
-// c. req.body
-
-app.use(express.json())
-app.post('/user',(req,res)=>{
-    console.log(req.body)
-})
+// app.get('/search',(req,res)=>{
+//     res.send(req.query.name)
+// })
 
 
-// req.method
-app.get('/search', (req,res)=>{
-    res.send(req.method)
-})
+// // c. req.body
 
-// req.url
+// app.use(express.json())
+// app.post('/user',(req,res)=>{
+//     console.log(req.body)
+// })
 
-app.get('/search', (req,res)=>{
-    res.send(req.url)
-})
 
-app.get('/search',(req,res)=>{
-    res.send(req.header)
-})
+// // D. req.method
+// app.get('/search', (req,res)=>{
+//     res.send(req.method)
+// })
+
+
+// // E. req.url
+
+// app.get('/search', (req,res)=>{
+//     res.send(req.url)
+// })
+
+// app.get('/search',(req,res)=>{
+//     res.send(req.header)
+// })
+
+
+
+
+// A. res.send()
+
+// app.get('/',(req,res)=>{
+//     res.send('hello express')
+// })
+
+// B. res.json() -> sends JSON data
+
+// app.get('/user',(req,res)=>{
+//     res.json({
+//         name : "hashim",
+//         age:23
+//     });
+// });
+
+// C. res.status() -> sets HTTP status code
+
+// app.get('/', (req,res)=>{
+//     res.status(200).send('success');
+// })
+
+// D. res.sendFile()
+// const path = require('path')
+// app.get('/', (req,res)=>{
+//     res.sendFile(path.join(__dirname,'index.html'));
+// });
+
+// E. res.redirect () -> Redirect to another URL 
+
+// app.get ('/home',(req,res)=>{
+//     res.redirect('/about');
+// });
+
+// app.get('/about', (req,res)=>{
+//     res.send('about page')
+// })
 
 app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`);
 })
+
+
