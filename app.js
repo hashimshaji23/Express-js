@@ -130,8 +130,39 @@ const PORT = 3001;
 //     res.send('about page')
 // })
 
-app.listen(PORT,()=>{
-    console.log(`server is running on port ${PORT}`);
+
+
+// middleware
+// const mymiddleware = (req,res,next)=>{
+//     console.log('this is my middleware');
+//     next()
+// }
+
+// app.get('/', mymiddleware, (req,res)=>{
+//     res.send('hello express with middleware')
+// })
+
+
+// app.listen(PORT,()=>{
+//     console.log(`server is running on port ${PORT}`);
+// })
+
+// Authorized method 
+
+const auth = (req,res,next)=>{
+    const token = req.headers.token;
+    
+    if (token === '123456'){
+        next()
+    } else {
+        res.status(401).send('unauthorized')
+    }
+}
+
+app.get('/profile', auth, (req,res)=>{
+    res.send('welcome user')
+});
+
+app.listen(PORT, ()=>{
+    console.log('server is running on port ' + PORT );
 })
-
-
