@@ -73,7 +73,7 @@ const PORT = 3001;
 //     console.log(req.body)
 // })
 
-
+    
 // // D. req.method
 // app.get('/search', (req,res)=>{
 //     res.send(req.method)
