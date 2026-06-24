@@ -4,6 +4,7 @@ const app = express()
 import dotenv from 'dotenv'
 import connection from  './config/db.js'
 import userRoute from './routes/userRoute.js'
+import productRoute from './routes/productRoutes.js'
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ connection()
 
 app.use(express.json())
 app.use('/user', userRoute)
+app.use('/product',productRoute)
 
 
 app.listen(port, ()=>{
