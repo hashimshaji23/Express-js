@@ -13,7 +13,7 @@ export const addProduct = async (req, res, next) => {
             });
             if (req.file && req.file.filename){
                 newProduct.image = req.file.filename;
-            }
+            }  
             const saveUser = await newProduct.save()
             res.status(200).json({
                 status: true,
