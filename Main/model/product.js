@@ -5,16 +5,16 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    // email: {
-    //     type: String,
-    //     require: true
-    // },
     des: {
         type: String,
         require: true
     },
     price: {
         type: Number,
+        require: true
+    },
+    image: {
+        type: String,
         require: true
     }
 }, { timestamps: true })
