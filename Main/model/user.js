@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    passward: {
+    password: {
         type: String,
         require: true
     }

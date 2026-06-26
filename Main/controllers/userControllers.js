@@ -7,7 +7,7 @@ export const Register = async (req, res, next) => {
     try {
         const { name, email, phone, password } = req.body
 
-        console.log(req.body)
+        // console.log(req.body)
 
         if (!email) {
             console.log("Email is required");
@@ -20,13 +20,18 @@ export const Register = async (req, res, next) => {
         const salt = bcrypt.genSaltSync(saltRounds)
         const hash = bcrypt.hashSync(password, salt)
 
-        const newUser = new User({ name, email, phone, password: hash })
+        const newUser = new User({ name, email, phone, password:hash })
+        // console.log(newUser);
+
         const saveUser = await newUser.save()
+        console.log(saveUser);
+        
         res.status(200).json({
             status: true,
             message: "successfull",
             data: saveUser
         })
+        
 
     } catch (err) {
         console.log("err", err);
@@ -35,17 +40,26 @@ export const Register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     try {
+        
         const { email, password } = req.body
+        // console.log(req.body);
+        
         if (!email) {
             console.log("email is required")
         } else {
             const user = await User.findOne({ email })
+            // console.log(user);
+            
             if (!user) {
                 console.log("Invalid email");
             } else {
+                
                 const isPassword = await bcrypt.compare(
                     req.body.password, user.password
                 )
+                
+                // console.log(isPassword);
+                
                 if (isPassword) {
                     const token = jwt.sign(
                         { userId: user._id, userEmail: user.email },
@@ -64,6 +78,6 @@ export const login = async (req, res, next) => {
             }
         }
     } catch (err) {
-        console.log('err');
+        console.log(err);
     }
 }
