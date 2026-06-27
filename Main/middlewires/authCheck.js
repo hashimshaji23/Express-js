@@ -12,18 +12,18 @@ const authChec = async (req, res, next) => {
             } else {
 
                 const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-                const validUser = await User.findById(decodedToken.id)
-                conasole.log(validUser);
+                const validUser = await User.findOne({_id : decodedToken.userid})
+                console.log(validUser);
                 if (!validUser) {
                     console.log("Invalid credentials");
                 } else {
-                    req.userDetails = { userId: deccodedToken.userId, }
+                    req.userDetails = { userId: deccodedToken.userId, userRole: decodedToken.userRole }
                     next()
                 }
 
             }
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            console.log("Authentication failed !");
         }
     }
 }

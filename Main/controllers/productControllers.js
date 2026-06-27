@@ -1,19 +1,54 @@
 import Product from "../model/product.js";
 
+// export const addProduct = async (req, res, next) => {
+//     try {
+
+//         const { name, des, price, image } = req.body;
+
+//         if (!name) {
+//             console.log("name is required");
+//         } else {
+//             const newProduct = new Product({
+//                 name, des, price
+//             });
+//             if (req.file && req.file.filename){
+//                 newProduct.image = req.file.filename;
+//             }  
+//             const saveUser = await newProduct.save()
+//             res.status(200).json({
+//                 status: true,
+//                 message: 'successfull',
+//                 data: saveUser
+//             })
+//         }
+
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+
 export const addProduct = async (req, res, next) => {
     try {
 
-        const { name, des, price, image } = req.body;
+        if(req.userDetails.userRole !== "admin"){
+            return res.status(403).json({
+                status : false,
+                message: "Access Denied! Only Admin Can add Products"
+            });
+        }
+
+
+        const {name, des, price, image} = req.body
 
         if (!name) {
             console.log("name is required");
         } else {
             const newProduct = new Product({
                 name, des, price
-            });
-            if (req.file && req.file.filename){
+            })
+            if (req.file && req.file.filename) {
                 newProduct.image = req.file.filename;
-            }  
+            }
             const saveUser = await newProduct.save()
             res.status(200).json({
                 status: true,
@@ -25,19 +60,47 @@ export const addProduct = async (req, res, next) => {
     } catch (err) {
         console.log(err);
     }
+
 }
 
-export const getProduct = async (req, res, next) => {
-    try {
-        const listProduct = await Product.find();
+// export const getProduct = async (req, res, next) => {
+//     try {
+//         const listProduct = await Product.find();
+//         res.status(200).json({
+//             status: true,
+//             message: "successful",
+//             data: listProduct
+//         })
+//     } catch (err) {
+//         console.log(err)
+
+//     }
+// }
+
+
+export const getProduct = async (req, res, next)=>{
+    try{
+
+        const  { name, minPrice, maxPrice } = req.query;
+
+        const filter = {};
+
+        if(minPrice || maxPrice){
+            filter.price = {};
+            if (minPrice) filter.price.$gte = Number(minPrice);
+            if (maxPrice) filter.price.$lte = Number(maxPrice);
+        }
+
+        const listProduct = await Product.find(filter).sort({ createdAt : -1 });
+
         res.status(200).json({
             status: true,
-            message: "successful",
+            message: "success",
             data: listProduct
-        })
-    } catch (err) {
-        console.log(err)
+        });
 
+    }catch(error){
+        console.log(error)
     }
 }
 
