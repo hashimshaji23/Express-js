@@ -5,7 +5,7 @@ import User from "../model/user.js";
 export const Register = async (req, res, next) => {
     // console.log("heyy")
     try {
-        const { name, email, phone, password } = req.body
+        const { name, email, phone, password, role } = req.body
 
         // console.log(req.body)
 
@@ -20,7 +20,7 @@ export const Register = async (req, res, next) => {
         const salt = bcrypt.genSaltSync(saltRounds)
         const hash = bcrypt.hashSync(password, salt)
 
-        const newUser = new User({ name, email, phone, password:hash })
+        const newUser = new User({ name, email, phone, password:hash, role })
         // console.log(newUser);
 
         const saveUser = await newUser.save()
@@ -62,7 +62,7 @@ export const login = async (req, res, next) => {
                 
                 if (isPassword) {
                     const token = jwt.sign(
-                        { userId: user._id, userEmail: user.email, userRole: user.Role },
+                        { userId: user._id, userEmail: user.email, userRole: user.role },
                         process.env.JWT_SECRET,
                         { expiresIn: process.env.JWT_TOKEN_EXPIRY }
                     );

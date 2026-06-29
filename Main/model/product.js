@@ -12,11 +12,11 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         require: true
-    },
-    image: {
-        type: String,
-        require: true
     }
+    // image: {
+    //     type: String,
+    //     require: true
+    // }
 }, { timestamps: true })
 
 const Product = mongoose.model('products', productSchema)

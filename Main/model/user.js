@@ -2,12 +2,12 @@ import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
 
-    name : {
+    name: {
         type: String,
         require: true
     },
     email: {
-        type: String ,
+        type: String,
         require: true
     },
     phone: {
@@ -18,11 +18,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    Role : {
+    role: {
         type: String,
-        require: true
+        enum: ["user", "admin"],
+        default: "user"
     }
-},{timestamps: true})
+}, { timestamps: true })
 
 const User = mongoose.model('userData', userSchema)
 

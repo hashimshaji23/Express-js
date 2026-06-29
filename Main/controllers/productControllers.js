@@ -38,7 +38,7 @@ export const addProduct = async (req, res, next) => {
         }
 
 
-        const {name, des, price, image} = req.body
+        const {name, des, price, } = req.body
 
         if (!name) {
             console.log("name is required");
@@ -46,9 +46,9 @@ export const addProduct = async (req, res, next) => {
             const newProduct = new Product({
                 name, des, price
             })
-            if (req.file && req.file.filename) {
-                newProduct.image = req.file.filename;
-            }
+            // if (req.file && req.file.filename) {
+            //     newProduct.image = req.file.filename;
+            // }
             const saveUser = await newProduct.save()
             res.status(200).json({
                 status: true,
